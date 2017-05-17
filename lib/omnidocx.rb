@@ -388,8 +388,10 @@ module Omnidocx
           #updting the id and rid values for every drawing element in the document XML with the new counters
           doc_content.xpath("//w:drawing").each do |dr_node|
             blip = dr_node.xpath(".//a:blip", NAMESPACES).last
-            i = rid_hash["doc#{doc_cnt}"][blip.attributes["embed"].value]
-            blip.attributes["embed"].value = blip.attributes["embed"].value.gsub(/[0-9]+/,i)
+            if blip
+              i = rid_hash["doc#{doc_cnt}"][blip.attributes["embed"].value]
+              blip.attributes["embed"].value = blip.attributes["embed"].value.gsub(/[0-9]+/,i)
+            end
             docPr = dr_node.xpath(".//wp:docPr").last
             docPr["id"] = #{docPr_id}
             docPr_id+=1 
